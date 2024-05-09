@@ -18,7 +18,7 @@ def predict():
     url = request.args["url"]
     prediction = model.predict([preprocess(url)])
     
-    encoder = pickle.load(open('artifacts/encoder.pickle', 'rb'))
+    encoder = pickle.load(open('model/encoder.pickle', 'rb'))
     
     prediction = encoder.inverse_transform([prediction.argmax(axis=1)[0]])[0]
     
@@ -26,7 +26,7 @@ def predict():
 
 # TODO: Move to lib-ml
 def preprocess(input):
-    tokenizer = pickle.load(open('artifacts/tokenizer.pickle', 'rb'))
+    tokenizer = pickle.load(open('model/tokenizer.pickle', 'rb'))
     result = pad_sequences(tokenizer.texts_to_sequences(input), maxlen=SEQUENCE_LENGTH)
     return result
 
@@ -38,5 +38,5 @@ if __name__ == '__main__':
     # download_folder(id=DRIVE_ID, output="artifacts", quiet=False)
     
     # load the model
-    model: keras.Sequential = keras.models.load_model('artifacts/model.keras')
+    model: keras.Sequential = keras.models.load_model('model/model.keras')
     app.run(host='0.0.0.0', port=105, debug=True)
