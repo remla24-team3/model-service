@@ -14,6 +14,7 @@ tensorflow = "^2.16.1"
 dvc = "^3.50.1"
 dvc-gdrive = "^3.0.1"
 lib-ml = { git = "https://github.com/remla24-team3/lib-ml.git", tag = "v0.1.0" }
+scikit-learn = "^1.4.2"
 
 [build-system]
 requires = ["poetry-core"]
