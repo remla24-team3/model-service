@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "model-service"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+flask = "^3.0.3"
+gdown = "^5.1.0"
+keras = "^3.3.3"
+tensorflow = "^2.16.1"
+dvc = "^3.50.1"
+dvc-gdrive = "^3.0.1"
+lib-ml = { git = "https://github.com/remla24-team3/lib-ml.git", tag = "v0.1.0" }
+scikit-learn = "^1.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
