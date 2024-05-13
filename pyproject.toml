@@ -10,11 +10,8 @@ package-mode = false
 python = ">=3.9,<3.13"
 flask = "^3.0.3"
 gdown = "^5.1.0"
-keras = "^3.3.3"
-tensorflow = "^2.16.1"
 dvc = "^3.50.1"
 dvc-gdrive = "^3.0.1"
-scikit-learn = "^1.4.2"
 lib-ml-group3 = "^0.3.0"
 
 [build-system]
