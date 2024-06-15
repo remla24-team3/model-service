@@ -19,11 +19,10 @@ jobs:
         poetry config virtualenvs.create false
     - name: Install dependencies
       run: |
-        cd service
         poetry install
     - name: Analysing the code with pylint
       run: |
-        pylint --disable E0611 $(git ls-files '*.py')
+        poetry run pylint --disable E0611 $(git ls-files '*.py')
     - name: Analysing the code with Flake8
       run: |
-        flake8 .
+        poetry run flake8 .
