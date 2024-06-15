@@ -6,6 +6,8 @@ from lib_ml_group3.load_model import load_model
 model = load_model(
     "model/model.keras", "model/encoder.pickle", "model/tokenizer.pickle"
 )
+
+
 app = Flask(__name__)
 
 
