@@ -62,10 +62,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          IS_PRERELEASE=false
+          if [[ ${{ env.VERSION }} == *-* ]]; then
+            IS_PRERELEASE=true
+          fi
+
           gh release create "${{ env.VERSION }}" \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --generate-notes
+              --title="${GITHUB_REPOSITORY#*/} ${env.VERSION#v}" \
+              --generate-notes \
+              $([[ $IS_PRERELEASE == true ]] && echo "--prerelease")
 
       - name: Build and Push Model Service Docker Image
         run: |
@@ -73,4 +79,4 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           echo "Building Docker image with tag $IMAGE_ID:${{ env.VERSION }}"
           docker build . --file Dockerfile --tag $IMAGE_ID:${{ env.VERSION }} --label "runnumber=${GITHUB_RUN_ID}"
-          docker push $IMAGE_ID:${{ env.VERSION }}
+          docker push $IMAGE_ID:${{ env.VERSION }}"
