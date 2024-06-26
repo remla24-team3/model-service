@@ -55,16 +55,15 @@ jobs:
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Create-Release
-        id: release
-        uses: actions/create-release@v1
+      - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: "${{ env.VERSION }}"
-          release_name: "${{ env.VERSION }}"
-          draft: false
-          prerelease: false
+          tag: ${{ env.VERSION }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --generate-notes
 
       - name: Build and Push Model Service Docker Image
         run: |
