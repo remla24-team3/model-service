@@ -61,15 +61,17 @@ jobs:
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ env.VERSION }}
+          REPO: ${{ github.repository }}
         run: |
           IS_PRERELEASE=false
-          if [[ ${{ env.VERSION }} == *-* ]]; then
+          if [[ $VERSION == *-* ]]; then
             IS_PRERELEASE=true
           fi
 
-          gh release create "${{ env.VERSION }}" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${env.VERSION#v}" \
+          gh release create "$VERSION" \
+              --repo="$REPO" \
+              --title="${REPO#*/} ${VERSION#v}" \
               --generate-notes \
               $([[ $IS_PRERELEASE == true ]] && echo "--prerelease")
 
