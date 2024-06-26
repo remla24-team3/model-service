@@ -38,9 +38,9 @@ jobs:
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
           else
-            VERSION=$(git describe --tags --abbrev=0 --exclude="*-*" 2>/dev/null || echo "v0.0.0")
-            VERSION=${VERSION#v}
-            IFS='.' read -ra ADDR <<< "$VERSION"
+            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            LATEST_TAG=${LATEST_TAG#v}
+            IFS='.' read -ra ADDR <<< "$LATEST_TAG"
             PATCH=$((ADDR[2] + 1))
             VERSION="${ADDR[0]}.${ADDR[1]}.$PATCH"
             if [[ "${GITHUB_REF}" == refs/heads/main ]]; then
