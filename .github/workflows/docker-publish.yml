@@ -1,11 +1,10 @@
-name: Docker Publish
+name: Automated Release Process
 
 on:
   push:
     branches:
       - main
-      - 'beta/*'
-      -  versioning
+      - 'versioning'
     tags:
       - v*
 
@@ -14,7 +13,7 @@ env:
   IMAGE_NAME: model-service
 
 jobs:
-  push:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,14 +44,22 @@ jobs:
             PATCH=$((ADDR[2] + 1))
             VERSION="${ADDR[0]}.${ADDR[1]}.$PATCH"
             if [[ "${GITHUB_REF}" == refs/heads/main ]]; then
-              VERSION="$VERSION-latest"
+              VERSION="v$VERSION"
             elif [[ "${GITHUB_REF}" == refs/heads/beta/* ]]; then
-              VERSION="$VERSION-beta-$(date +%Y%m%d)"
+              VERSION="v$VERSION-beta-$(date +%Y%m%d)"
             fi
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Build and Push Docker Image
+      - name: Create and push new tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag ${{ env.VERSION }}
+          git push origin ${{ env.VERSION }}
+
+      - name: Build and Push Model Service Docker Image
         run: |
           IMAGE_ID=${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
