@@ -10,6 +10,7 @@ ENV POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=1 \
     POETRY_CACHE_DIR=/tmp/poetry_cache
 
+RUN poetry update
 RUN poetry install --only=main && rm -rf $POETRY_CACHE_DIR
 
 EXPOSE 105
