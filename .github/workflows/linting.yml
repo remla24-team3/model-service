@@ -19,6 +19,7 @@ jobs:
         poetry config virtualenvs.create false
     - name: Install dependencies
       run: |
+        poetry update
         poetry install
     - name: Analysing the code with pylint
       run: |

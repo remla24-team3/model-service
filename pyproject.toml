@@ -15,6 +15,7 @@ dvc-gdrive = "^3.0.1"
 lib-ml-group3 = "^0.3.0"
 pylint = "^3.1.0"
 pytest = "^6.2.5"
+flasgger = "^0.9.7.1"
 
 
 [tool.poetry.dev-dependencies]
