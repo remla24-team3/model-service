@@ -11,6 +11,7 @@ model = load_model(
 app = Flask(__name__)
 swagger = Swagger(app)
 
+
 @app.route("/API/v1.0/predict", methods=["GET", "POST"])
 def predict():
     """
@@ -31,6 +32,7 @@ def predict():
     url = str(request.args["url"])
     prediction = model.predict([url])[0]
     return jsonify(prediction=prediction)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=105, debug=True)
